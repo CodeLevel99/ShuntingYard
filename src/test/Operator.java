@@ -19,9 +19,6 @@ public class Operator {
 		return operator; 
 	}
 	
-	public int hashCode() {
-		return (int) precedence; 
-	}
 }
 
 
