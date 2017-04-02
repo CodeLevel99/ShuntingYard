@@ -1,5 +1,6 @@
 package test;
 
+
 public class Operator {
 	
 	private String operator;
@@ -17,4 +18,10 @@ public class Operator {
 	public String getOps() {
 		return operator; 
 	}
+	
+	public int hashCode() {
+		return (int) precedence; 
+	}
 }
+
+

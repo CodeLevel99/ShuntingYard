@@ -11,8 +11,6 @@ public class Main {
 	
 	static HashMap<String, Integer> prec = new HashMap<String, Integer>();
 	
-	
-	
 	private static boolean isHigher(String c, String topStack) {
 		
 		System.out.println("**** IsHigher *****");
@@ -33,14 +31,18 @@ public class Main {
 		String postfix = "";
 		
 		
-		HashMap<Operator, Integer> prec = new HashMap<Operator, Integer>();
+		HashMap<String, Integer> prec = new HashMap<String, Integer>();
 		
-		Operator multiply = new Operator("*", 2);
-		Operator divide = new Operator("/", 2);
+		Operator multiply = new Operator("*", 4);
+		Operator divide = new Operator("/", 3);
 		Operator add = new Operator("+", 2);
-		Operator subtract = new Operator("-", 2);
+		Operator subtract = new Operator("-", 1);
         
-		prec.put(multiply, )
+		prec.put(multiply.getOps(), multiply.getPrec());
+		prec.put(divide.getOps(), divide.getPrec());
+		prec.put(add.getOps(), add.getPrec());
+		prec.put(subtract.getOps(), subtract.getPrec());
+		
 		
         for (String c : infixString) {
         	
@@ -73,23 +75,6 @@ public class Main {
         
         int opsSize = stack.size();
         
-        prec.get("*");
-        
-        
-        //System.out.println(prec.getOrDefault("*", 0));
-        
-   
-        
-        
-        
-        
-        //check size of numerator stack
-        /*
-             for (int i = 0; i < numSize; i++) {
-        	System.out.println(numbers.elementAt(i));
-        }
-        */
-
         for (int i = 0; i  < opsSize; i++) {
         	System.out.println(stack.elementAt(i));
         	
@@ -100,28 +85,6 @@ public class Main {
 	}//main
 
 
-	class Operator {
-		
-		private String operator;
-		private int precedence;
-		
-		public Operator(String ops, int prec) {
-			operator = ops;
-			precedence = prec; 
-		}
-		
-		public int getPrec() {
-			return precedence;
-		}
-		
-		public String getOps() {
-			return operator; 
-		}
-		
-		public int hashCode() {
-			return (int) precedence; 
-		}
-	}
 
 }
 
