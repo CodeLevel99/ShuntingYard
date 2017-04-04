@@ -1,10 +1,10 @@
 package test;
 
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Stack;
+
 
 public class Main {
 	
@@ -15,16 +15,18 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		String infix = "2+3*9-7";
+		String infix = "22+3*9-7";
 		String [] infixString = infix.split("(?!^)");
 		
 		Stack<String> stack= new Stack<String>();
-		String postfix = "";
+		ArrayList<String> postfix = new ArrayList<String>();
 		
 		prec.put("*", 4);
 		prec.put("/", 3);
 		prec.put("+", 2);
 		prec.put("-", 1);
+		
+		String curString = "";
 		
         for (String c : infixString) {
         	
@@ -32,27 +34,42 @@ public class Main {
         	
         	if (prec.containsKey(c) && stack.isEmpty()) {
         		//c is an operator and stack is empty
+        		System.out.println("curString: " + curString);
+        		postfix.add(curString);
+        		curString = ""; 
         		stack.push(c);
         	}
         	else if (prec.containsKey(c) && !stack.isEmpty()) {
         		System.out.println("Second");
         		System.out.println("c: " + c + " peek: " + stack.peek());
+        		System.out.println("curString: " + curString);
+        		
+        		postfix.add(curString);
+        		curString = ""; 
         		
         		while (!stack.isEmpty() && isHigher(c, stack.peek())) {
-        			postfix = postfix.concat(stack.pop());
+        			//if new operator is higher than the current operator at top of stack
+        			
+        			postfix.add(stack.pop());
         		}
         		stack.push(c);
         	}
         	else {
         		//c is an operand
-        		postfix = postfix.concat(c);	
+        		//postfix = postfix.concat(c);	
+        		curString = curString.concat(c);
         	}
         	printStack(stack);
         }
         
-        while (!stack.isEmpty()) {
-        	postfix = postfix.concat(stack.pop()); 
+        if (curString != null && !curString.isEmpty()) {
+        	postfix.add(curString);
         }
+        
+        while (!stack.isEmpty()) {
+        	postfix.add(stack.pop()); 
+        }
+
         
         System.out.println("postfix: " + postfix);
         
@@ -60,11 +77,12 @@ public class Main {
         
         Stack<String> post = new Stack<String>();
         
-        String expression = ""; 
         
-        String [] postfixString = postfix.split("(?!^)");
         
-        for (String n : postfixString) {
+        //String [] postfixString = postfix.split("(?!^)");
+        
+        for (String n : postfix) {
+        	
         	if (prec.containsKey(n)) {
         		
         		String topStack = post.peek();
