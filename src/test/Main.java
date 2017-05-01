@@ -16,7 +16,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		String infix = "-2";
+		String infix = "2";
 		String [] infixString = infix.split("(?!^)");
 		
 		Stack<String> stack= new Stack<String>();
@@ -35,7 +35,13 @@ public class Main {
         	System.out.println("Scanned c: " + c);
         	
         	if (prec.containsKey(c)) {
-        		//c is an operator and stack is empty
+        		
+        		if (curString == "") {
+        			
+        			//if the expression starts with an operator
+        			curString = "0";
+        		}
+        		
         		postfix.add(curString);
         		curString = ""; 
         		
@@ -69,6 +75,7 @@ public class Main {
         Stack<String> post = new Stack<String>();
 
         //String [] postfixString = postfix.split("(?!^)");
+       
         
         for (String n : postfix) {
         	
