@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Stack;
+import java.math.*;
 
 
 public class Main {
@@ -15,12 +16,13 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		String infix = "22+3*9-7";
+		String infix = "-2";
 		String [] infixString = infix.split("(?!^)");
 		
 		Stack<String> stack= new Stack<String>();
 		ArrayList<String> postfix = new ArrayList<String>();
 		
+		prec.put("^", 5);
 		prec.put("*", 4);
 		prec.put("/", 3);
 		prec.put("+", 2);
@@ -32,18 +34,8 @@ public class Main {
         	
         	System.out.println("Scanned c: " + c);
         	
-        	if (prec.containsKey(c) && stack.isEmpty()) {
+        	if (prec.containsKey(c)) {
         		//c is an operator and stack is empty
-        		System.out.println("curString: " + curString);
-        		postfix.add(curString);
-        		curString = ""; 
-        		stack.push(c);
-        	}
-        	else if (prec.containsKey(c) && !stack.isEmpty()) {
-        		System.out.println("Second");
-        		System.out.println("c: " + c + " peek: " + stack.peek());
-        		System.out.println("curString: " + curString);
-        		
         		postfix.add(curString);
         		curString = ""; 
         		
@@ -69,16 +61,13 @@ public class Main {
         while (!stack.isEmpty()) {
         	postfix.add(stack.pop()); 
         }
-
         
         System.out.println("postfix: " + postfix);
         
         //postfix evaluator
         
         Stack<String> post = new Stack<String>();
-        
-        
-        
+
         //String [] postfixString = postfix.split("(?!^)");
         
         for (String n : postfix) {
@@ -91,6 +80,9 @@ public class Main {
         		int retVal = 0;
         		
         		switch(n) { 
+        			case "^":
+        				retVal = (int) Math.pow(Integer.parseInt(post.pop()), Integer.parseInt(topStack));
+        				break;
         			case "*":
         				retVal = Integer.parseInt(post.pop()) * Integer.parseInt(topStack);
         				break;
@@ -122,17 +114,20 @@ public class Main {
         System.out.println("evaluated: " + post.peek());
         
         
-
+        	
 	}//main
 	
 	private static boolean isHigher(String c, String topStack) {
 		
+		//if the operator on top of stack is higher than operator scanned, return true
 		return prec.get(topStack) > prec.get(c);
 	}
 	
 	public static void printStack(Stack stack) {
 		
         int opsSize = stack.size();
+        
+        System.out.println("Printed stack: ");
         
         for (int i = 0; i  < opsSize; i++) {
         	System.out.print(stack.elementAt(i));	
