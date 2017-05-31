@@ -1,2 +1,0 @@
-# ShuntingYard
-Shunting Yard Algorithm
